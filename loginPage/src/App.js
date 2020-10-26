@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View, Text, StyleSheet, FlatList, Image, Dimensions, TextInput} from 'react-native';
 import product_data from './components/product_data.json';
 import ProductCard from './components/ProductCard';
@@ -7,10 +7,24 @@ import ProductCard from './components/ProductCard';
 
 const App = () => {
   const renderList = ({item}) => <ProductCard product={item}/>
-  const [searchtext, setsearchtext] = useState(""),
+  const [searchtext, setsearchtext] = useState("");
+  const [displayList, setDisplayList] = useState([]);
+
+  useEffect(() => {
+    setDisplayList(product_data)
+  }, [])
+
+  useEffect(() => {
+    const filteredValue =product_data.filter( item => {
+      const text = searchtext.toUpperCase();
+      const productTitle = item.title.toUpperCase();
+      return productTitle.indexOf(text) > -1;
+    })
+    setDisplayList(filteredValue)
+  }, [searchtext])
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView >
       <View >
         <View >
           <Image source={{uri:'https://www.gursesgazetesi.com/images/haberler/2019/07/gunes-ve-sirius-yildizinin-yan-yana-gelmesi-kaderin-yazildigi-gun-1900saatine-dikkat.jpg'}}
@@ -19,17 +33,20 @@ const App = () => {
           <Text style={styles.textstyle}>Sirius Store</Text>
         </View>
         <View>
-          <TextInput style={styles.searchBar} placeholder='Search'/>
+          <TextInput 
+          style={styles.searchBar} 
+          placeholder='Search...'
+          onChangeText={value => setsearchtext(value)}
+          />
         </View>
         <FlatList
-        data={product_data}
+        data={displayList}
         renderItem={renderList}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
         />
       </View>
-    </SafeAreaView>
-    
+    </SafeAreaView> 
   )
 }
 
@@ -47,7 +64,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     marginLeft: 86,
     marginTop: 18,
-    
   },
   imgStyle: {
     width: Dimensions.get('window').width,
@@ -62,9 +78,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     margin: 3,
-
   }
-
 })
 
 export default App;

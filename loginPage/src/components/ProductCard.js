@@ -11,9 +11,7 @@ const ProductCard = ({product}) => {
             <View style={{flex: 1, justifyContent: "space-between"}}>
             <Text>{product.title}</Text>
             <Text style={{fontWeight: "bold"}}>{product.price}</Text>
-            </View>
-           
-            
+            </View>            
         </View>
     )
 }
@@ -35,7 +33,5 @@ const styles =StyleSheet.create({
         
     }
 })
-
-
 
 export default ProductCard;
