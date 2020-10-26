@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, View, Text, StyleSheet, FlatList, Image, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, View, Text, StyleSheet, FlatList, Image, Dimensions, TextInput} from 'react-native';
 import product_data from './components/product_data.json';
 import ProductCard from './components/ProductCard';
 
@@ -7,6 +7,7 @@ import ProductCard from './components/ProductCard';
 
 const App = () => {
   const renderList = ({item}) => <ProductCard product={item}/>
+  const [searchtext, setsearchtext] = useState(""),
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -16,6 +17,9 @@ const App = () => {
           style={styles.imgStyle}
           />
           <Text style={styles.textstyle}>Sirius Store</Text>
+        </View>
+        <View>
+          <TextInput style={styles.searchBar} placeholder='Search'/>
         </View>
         <FlatList
         data={product_data}
@@ -44,7 +48,6 @@ const styles = StyleSheet.create({
     marginLeft: 86,
     marginTop: 18,
     
-    alignItems: "center"
   },
   imgStyle: {
     width: Dimensions.get('window').width,
@@ -54,6 +57,11 @@ const styles = StyleSheet.create({
     position: "relative",
     borderWidth: 1,
     borderColor: 'gray',
+  }, 
+  searchBar: {
+    borderWidth: 1,
+    borderRadius: 5,
+    margin: 3,
 
   }
 
