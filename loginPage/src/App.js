@@ -1,22 +1,27 @@
 import React from 'react';
-import {SafeAreaView, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import MyButton from './components/Button';
+import {SafeAreaView, View, Text, TouchableOpacity, StyleSheet, FlatList, Image, Dimensions, TextInput} from 'react-native';
+import product_data from './components/product_data.json';
+
 
 
 const App = () => {
+
+
   return (
     <SafeAreaView>
       <View>
+        <FlatList
+        data={product_data}
+        renderItem={({item}) => <Text>{item.title}</Text>}
+        keyExtractor={(item, index) => index.toString()}
         
+        />
       </View>
-      <MyButton banner="Press me!" color="#81d4fa" />
-      <MyButton banner="Press me!" color="#40e4fa" />
-      <MyButton/>
-      <MyButton/>
     </SafeAreaView>
     
   )
 }
+
 
 
 export default App;
